@@ -1,0 +1,49 @@
+.launch-card {
+    width: 220px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid lightgray;
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.199);
+}
+
+.launch-card--button {
+    background-color: #238ae6;
+    color: white;
+    width: 100%;
+    transition: background-color 0.3s ease-in-out,
+                border-color 0.3s ease-in-out;
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        border-color: #1e71b9;
+        background-color: #1e71b9;
+    }
+}
+
+.launch-card--image {
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.launch-card--title {
+    max-width: 220px;
+    font-weight: 600;
+    white-space: nowrap;    
+    overflow: hidden;         
+    text-overflow: ellipsis; 
+    color: black;
+}
+
+.launch-card--rocket {
+    color: lightgray;
+}
+
+.launch-card--group {
+    padding-top: 20px;
+}
