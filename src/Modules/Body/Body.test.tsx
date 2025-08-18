@@ -1,9 +1,17 @@
+import {vi, type Mock} from 'vitest';
+
+vi.mock('../../API/launchesList', () => ({
+  fetchLaunches2020: vi.fn(),
+}));
+
 import { render, screen, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { Body } from './Body';
-import { fetchLaunches2020 } from '../../../API/launchesList';
-import type { Launch } from '../../../types';
+import { fetchLaunches2020 } from '../../API/launchesList';
+import type { Launch } from '../../types';
 import { MantineProvider } from '@mantine/core';
+
+const mockedFetch = fetchLaunches2020 as Mock<() => Promise<Launch[]>>;
 
 beforeAll(() => {
   Object.defineProperty(window, 'matchMedia', {
@@ -20,12 +28,6 @@ beforeAll(() => {
     })),
   });
 });
-
-vi.mock('../../../API/launchesList', () => ({
-  fetchLaunches2020: vi.fn(),
-}));
-
-const mockedFetch = fetchLaunches2020 as Mock<() => Promise<Launch[]>>;
 
 const mockLaunches: Launch[] = [
   {
@@ -54,7 +56,9 @@ function renderWithMantine(ui: React.ReactElement) {
 
 describe('Body component', () => {
   beforeEach(() => {
-    mockedFetch.mockReset();
+      console.log('mockedFetch:', mockedFetch);
+  console.log('Is mock function:', typeof mockedFetch.mockClear === 'function');
+    mockedFetch.mockClear();
   });
 
   it('renders launches after fetch', async () => {

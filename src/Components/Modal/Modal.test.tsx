@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { ModalWindow } from './Modal';
-import type { Launch } from '../../../../types';
+import type { Launch } from '../../types';
 import { describe, it, expect, beforeEach, afterEach, beforeAll, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import { MantineProvider } from '@mantine/core';

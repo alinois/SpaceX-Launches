@@ -1,15 +1,18 @@
 import { Card, Text, Image, Group, Button } from '@mantine/core';
-import noImage from '../../../../assets/opanki.png';
-import type { Launch } from '../../../../types';
+import noImage from '../../assets/opanki.png';
+import type { Launch } from '../../types';
 import './LaunchCard.scss'
 
 
 interface LaunchCardProps {
   launch: Launch;
-  onSeeMore: () => void;
+  onSeeMore: (launch: Launch) => void;
 }
 
 export function LaunchCard ({ launch, onSeeMore }: LaunchCardProps) {
+  const handleClick = () => {
+    onSeeMore(launch);
+  };
   return (
       <Card className="launch-card" shadow="sm" padding="md" radius="md" withBorder>
         <Group className="launch-card--group" style={{ justifyContent: 'space-between' }} mt="md" mb="xs">
@@ -22,7 +25,7 @@ export function LaunchCard ({ launch, onSeeMore }: LaunchCardProps) {
           <Text className="launch-card--rocket">{launch.rocket?.rocket_name || 'No info'}</Text>
         </Group>
 
-        <Button className='launch-card--button' fullWidth onClick={onSeeMore}>
+        <Button className='launch-card--button' fullWidth onClick={handleClick}>
           See more
         </Button>
       </Card>

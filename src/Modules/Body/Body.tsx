@@ -1,22 +1,10 @@
-import { LaunchCard  } from '../Components/LaunchCard/LaunchCard'
-import { fetchLaunches2020 } from '../../../API/launchesList';
-import { ModalWindow } from '../Components/Modal/Modal';
-import { useEffect, useReducer } from 'react';
-import type { Launch } from '../../../types';
+import { LaunchCard  } from '../../Components/LaunchCard/LaunchCard'
+import { fetchLaunches2020 } from '../../API/launchesList';
+import { ModalWindow } from '../../Components/Modal/Modal';
+import { useEffect, useReducer, useCallback, useRef } from 'react';
+import type { Launch, State, Action} from '../../types';
 import { Container } from '@mantine/core';
 import './Body.scss'
-
-
-type State = {
-  launches: Launch[];
-  selectedLaunch: Launch | null;
-  isModalOpen: boolean;
-};
-
-type Action =
-  | { type: 'SET_LAUNCHES'; payload: Launch[] }
-  | { type: 'OPEN_MODAL'; payload: Launch }
-  | { type: 'CLOSE_MODAL' };
 
 const initialState: State = {
   launches: [],
@@ -47,6 +35,7 @@ function reducer(state: State, action: Action): State {
 
 export const Body = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const bodyRef = useRef<HTMLDivElement | null>(null);
 
 
   useEffect(() => {
@@ -55,13 +44,13 @@ export const Body = () => {
     );
   }, []);
 
-  const openModal = (launch: Launch) => {
+  const openModal = useCallback((launch: Launch) => {
     dispatch({ type: 'OPEN_MODAL', payload: launch });
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     dispatch({ type: 'CLOSE_MODAL' });
-  };
+  }, []);
 
   return (
     <>
@@ -71,11 +60,11 @@ export const Body = () => {
           <LaunchCard
           key={launch.mission_name}
           launch={launch}
-          onSeeMore={() => openModal(launch)}/>
+          onSeeMore={openModal}/>
         ))}
     </Container>
     {state.selectedLaunch && (
-      <ModalWindow launch={state.selectedLaunch} opened={state.isModalOpen} onClose={closeModal} />
+      <ModalWindow launch={state.selectedLaunch} opened={state.isModalOpen} onClose={closeModal} targetRef={bodyRef}/>
     )}
     </>
   );

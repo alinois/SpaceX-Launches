@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { MantineProvider } from '@mantine/core';
-import { Body } from './Modules/Body/Body';
+import { Body } from '../Modules/Body/Body';
 
 beforeAll(() => {
   Object.defineProperty(window, 'matchMedia', {

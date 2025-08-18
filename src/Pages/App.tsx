@@ -1,4 +1,4 @@
-import { Body } from './Modules/Body/Body'
+import { Body } from '../Modules/Body/Body'
 import './App.css'
 
 

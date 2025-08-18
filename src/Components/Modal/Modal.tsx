@@ -1,5 +1,5 @@
-import noImage from '../../../../assets/opanki.png'
-import type { Launch } from '../../../../types';
+import noImage from '../../assets/opanki.png';
+import type { Launch } from '../../types';
 import { createPortal } from "react-dom"
 import { useEffect } from "react";
 import './Modal.scss'
@@ -8,20 +8,27 @@ interface ModalWindowProps {
     launch: Launch;
     opened: boolean;
     onClose: () => void;
+    targetRef?: React.RefObject<HTMLElement | null>;
 }
 
-export const ModalWindow = ({ launch, opened, onClose }: ModalWindowProps) => {
-    useEffect(() => {
-        if (opened) {
-        document.body.classList.add('no-scroll');
-        } else {
-        document.body.classList.remove('no-scroll');
-        }
+export const ModalWindow = ({ launch, opened, onClose, targetRef }: ModalWindowProps) => {
+  useEffect(() => {
+    const element = targetRef?.current;
 
-        return () => {
-        document.body.classList.remove('no-scroll');
-        };
-    }, [opened]);
+    if (element) {
+      if (opened) {
+        element.classList.add('no-scroll');
+      } else {
+        element.classList.remove('no-scroll');
+      }
+    }
+
+    return () => {
+      if (element) {
+        element.classList.remove('no-scroll');
+      }
+    };
+  }, [opened, targetRef]);
 
     if (!opened) return null;
 
