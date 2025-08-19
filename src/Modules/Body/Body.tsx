@@ -54,6 +54,7 @@ export const Body = () => {
 
   return (
     <>
+    <div id='bodyContainer' ref={bodyRef}>
     <h1>SpaceX Launches 2020</h1>
     <Container className='grid'>
         {state.launches.map((launch) => (
@@ -63,6 +64,7 @@ export const Body = () => {
           onSeeMore={openModal}/>
         ))}
     </Container>
+    </div>
     {state.selectedLaunch && (
       <ModalWindow launch={state.selectedLaunch} opened={state.isModalOpen} onClose={closeModal} targetRef={bodyRef}/>
     )}
